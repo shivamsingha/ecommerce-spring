@@ -1,6 +1,23 @@
 spring:
+  jpa:
+    hibernate:
+      ddl-auto: update
+      show-sql: true
+    generate-ddl: true
+
   security:
     oauth2:
+      client:
+        registration:
+          keycloak:
+            client-id: authz-servlet
+            client-secret: secret
+            scope: openid
+            authorization-grant-type: authorization_code
+            redirect-uri: http://localhost:8080/login/oauth2/code/authz-servlet
+        provider:
+          keycloak:
+            issuer-uri: http://localhost:8081/realms/quickstart
       resource-server:
         jwt:
           jwk-set-uri: http://localhost:8081/realms/quickstart/protocol/openid-connect/certs
