@@ -11,9 +11,6 @@ import org.springframework.context.annotation.Configuration;
 import org.springframework.security.config.Customizer;
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
-import org.springframework.security.oauth2.jwt.JwtDecoder;
-import org.springframework.security.oauth2.jwt.NimbusJwtDecoder;
-import org.springframework.security.oauth2.server.resource.web.authentication.BearerTokenAuthenticationFilter;
 import org.springframework.security.web.SecurityFilterChain;
 
 import java.io.IOException;
@@ -32,11 +29,8 @@ public class SecurityConfiguration {
                 )
                 .oauth2Login(Customizer.withDefaults())
                 .oauth2ResourceServer(oauth2 -> oauth2
-                    .jwt(jwt -> jwt
-                        .decoder(jwtDecoder())
-                    )
-                )
-                .addFilterAfter(createPolicyEnforcerFilter(), BearerTokenAuthenticationFilter.class);
+                        .jwt(Customizer.withDefaults())
+                );
         return http.build();
     }
 
@@ -51,10 +45,5 @@ public class SecurityConfiguration {
                 }
             }
         });
-    }
-
-    @Bean
-    JwtDecoder jwtDecoder() {
-        return NimbusJwtDecoder.withJwkSetUri(this.jwkSetUri).build();
     }
 }

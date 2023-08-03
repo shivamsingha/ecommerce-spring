@@ -25,9 +25,7 @@ gradle-app.setting
 
 ### STS ###
 .apt_generated
-.classpath
 .factorypath
-.project
 .settings
 .springBeans
 .sts4-cache
@@ -53,6 +51,3 @@ out/
 
 ### VS Code ###
 .vscode/
-
-# STS (Spring Tool Suite)
-.springBeans
