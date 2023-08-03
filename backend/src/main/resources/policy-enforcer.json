@@ -1,0 +1,8 @@
+{
+  "realm": "quickstart",
+  "auth-server-url": "http://localhost:8081",
+  "resource": "authz-servlet",
+  "credentials": {
+    "secret": "secret"
+  }
+}
