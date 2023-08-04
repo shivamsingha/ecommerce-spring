@@ -18,6 +18,6 @@ spring:
         provider:
           keycloak:
             issuer-uri: http://localhost:8081/realms/quickstart
-      resource-server:
+      resourceserver:
         jwt:
-          jwk-set-uri: http://localhost:8081/realms/quickstart/protocol/openid-connect/certs
+          issuer-uri: http://localhost:8081/realms/quickstart
