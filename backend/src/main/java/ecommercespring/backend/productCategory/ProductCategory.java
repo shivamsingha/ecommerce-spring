@@ -1,19 +1,20 @@
 package ecommercespring.backend.productCategory;
 
 import ecommercespring.backend.product.Product;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import lombok.*;
+import jakarta.persistence.*;
+import lombok.Data;
+import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
+import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.UUID;
 
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 @Data
 public class ProductCategory {
     @Id
@@ -26,8 +27,18 @@ public class ProductCategory {
     private Set<Product> products;
 
     @CreatedDate
-    private Date createdAt;
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime createdAt;
 
     @LastModifiedDate
-    private Date modifiedAt;
+    @Column(nullable = false)
+    private LocalDateTime modifiedAt;
+
+    @CreatedBy
+    @Column(nullable = false, updatable = false)
+    private String createdBy;
+
+    @LastModifiedBy
+    @Column(nullable = false)
+    private String modifiedBy;
 }

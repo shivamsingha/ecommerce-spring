@@ -1,22 +1,21 @@
 package ecommercespring.backend.product;
 
 import ecommercespring.backend.discount.Discount;
-import jakarta.persistence.Entity;
-import jakarta.persistence.GeneratedValue;
-import jakarta.persistence.Id;
-import jakarta.persistence.OneToMany;
-import lombok.*;
+import jakarta.persistence.*;
+import lombok.Data;
 import org.springframework.data.annotation.CreatedBy;
 import org.springframework.data.annotation.CreatedDate;
 import org.springframework.data.annotation.LastModifiedBy;
 import org.springframework.data.annotation.LastModifiedDate;
+import org.springframework.data.jpa.domain.support.AuditingEntityListener;
 
 import java.net.URI;
-import java.util.Date;
+import java.time.LocalDateTime;
 import java.util.Set;
 import java.util.UUID;
 
 @Entity
+@EntityListeners(AuditingEntityListener.class)
 @Data
 public class Product {
     @Id
@@ -32,14 +31,18 @@ public class Product {
     private Set<Discount> discounts;
 
     @CreatedDate
-    private Date createdAt;
+    @Column(nullable = false, updatable = false)
+    private LocalDateTime createdAt;
 
     @LastModifiedDate
-    private Date modifiedAt;
+    @Column(nullable = false)
+    private LocalDateTime modifiedAt;
 
     @CreatedBy
-    private UUID createdBy;
+    @Column(nullable = false, updatable = false)
+    private String createdBy;
 
     @LastModifiedBy
-    private UUID modifiedBy;
+    @Column(nullable = false)
+    private String modifiedBy;
 }
