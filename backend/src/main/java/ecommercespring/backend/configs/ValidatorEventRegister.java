@@ -1,4 +1,4 @@
-package ecommercespring.backend;
+package ecommercespring.backend.configs;
 
 import lombok.RequiredArgsConstructor;
 import org.springframework.beans.factory.InitializingBean;
