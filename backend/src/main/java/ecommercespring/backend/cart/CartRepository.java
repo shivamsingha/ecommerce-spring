@@ -9,6 +9,6 @@ import java.util.UUID;
 
 public interface CartRepository extends JpaRepository<Cart, UUID> {
 
-    @Query("select c from Cart c where c.createdBy = ?#{ principal?.name }")
+    @Query("select c from Cart c where c.createdBy = ?#{ principal?.claims?.get('sub') }")
     Page<Cart> findAll(Pageable pageable);
 }

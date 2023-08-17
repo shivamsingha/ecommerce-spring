@@ -7,17 +7,13 @@ spring:
 
   security:
     oauth2:
-      client:
-        registration:
-          keycloak:
-            client-id: authz-servlet
-            client-secret: secret
-            scope: openid
-            authorization-grant-type: authorization_code
-            redirect-uri: http://localhost:8080/login/oauth2/code/authz-servlet
-        provider:
-          keycloak:
-            issuer-uri: http://localhost:8081/realms/quickstart
       resourceserver:
         jwt:
           issuer-uri: http://localhost:8081/realms/quickstart
+
+logging:
+  level:
+    web: debug
+    org:
+      springframework:
+        security: debug

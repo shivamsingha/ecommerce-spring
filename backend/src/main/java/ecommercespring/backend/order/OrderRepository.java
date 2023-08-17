@@ -9,6 +9,6 @@ import java.util.UUID;
 
 public interface OrderRepository extends JpaRepository<Order, UUID> {
 
-    @Query("select o from Order o where o.createdBy = ?#{ principal?.name }")
+    @Query("select o from Order o where o.createdBy = ?#{ principal?.claims?.get('sub') }")
     Page<Order> findAll(Pageable pageable);
 }

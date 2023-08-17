@@ -1,7 +1,6 @@
 package ecommercespring.backend.configs;
 
 import lombok.RequiredArgsConstructor;
-import org.springframework.beans.factory.annotation.Value;
 import org.springframework.context.annotation.Bean;
 import org.springframework.context.annotation.Configuration;
 import org.springframework.core.convert.converter.Converter;
@@ -31,8 +30,7 @@ import java.util.stream.Stream;
 public class SecurityConfiguration {
 
     private final ClientRegistrationRepository clientRegistrationRepository;
-    @Value("${spring.security.oauth2.client.registration.keycloak.client-id}")
-    private String clientId;
+    private final String clientId = "authz-servlet";
 
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
