@@ -29,7 +29,6 @@ import java.util.stream.Stream;
 @RequiredArgsConstructor
 public class SecurityConfiguration {
 
-    private final ClientRegistrationRepository clientRegistrationRepository;
     private final String clientId = "authz-servlet";
 
     @Bean
@@ -51,9 +50,6 @@ public class SecurityConfiguration {
                         .jwt(jwtConfigurer -> jwtConfigurer
                                 .jwtAuthenticationConverter(authenticationConverter(authoritiesConverter()))
                         )
-                )
-                .logout(logout -> logout
-                        .logoutSuccessHandler(oidcLogoutSuccessHandler())
                 );
         return http.build();
     }
@@ -86,14 +82,6 @@ public class SecurityConfiguration {
     @Bean
     public SecurityEvaluationContextExtension securityEvaluationContextExtension() {
         return new SecurityEvaluationContextExtension();
-    }
-
-    private LogoutSuccessHandler oidcLogoutSuccessHandler() {
-        OidcClientInitiatedLogoutSuccessHandler oidcLogoutSuccessHandler =
-                new OidcClientInitiatedLogoutSuccessHandler(this.clientRegistrationRepository);
-        oidcLogoutSuccessHandler.setPostLogoutRedirectUri("{baseUrl}");
-
-        return oidcLogoutSuccessHandler;
     }
 
     public interface Jwt2AuthoritiesConverter extends Converter<Jwt, Collection<? extends GrantedAuthority>> {
