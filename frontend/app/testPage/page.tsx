@@ -4,15 +4,14 @@ import { authOptions } from "../api/auth/[...nextauth]/route";
 
 async function getData() {
   const session = await getServerSession(authOptions);
-
+  if (!session) throw new Error("Not Logged in");
   const res = await fetch(`${process.env.API_ENDPOINT}/carts`, {
     headers: {
-      Authorization: `Bearer ${session?.user?.accessToken}`,
+      Authorization: `Bearer ${session?.access_token}`,
     },
   });
 
   if (!res.ok) {
-    console.log(res.status, res.statusText);
     throw new Error("Failed to fetch data");
   }
   const data = await res.json();
