@@ -53,17 +53,10 @@ export const authOptions: AuthOptions = {
         return { ...token, error: "RefreshAccessTokenError" as const };
       }
     },
-    session: ({ session, token }) => {
-      return {
-        ...session,
-        user: {
-          ...session.user,
-          role: token.role,
-        },
-        refresh_token: token.refresh_token,
-        access_token: token.access_token,
-      };
-    },
+    session: ({ session, token }) => ({
+      ...session,
+      ...token,
+    }),
   },
   providers: [
     KeycloakProvider({
