@@ -10,6 +10,9 @@ import { Inter } from "next/font/google";
 function classNames(...classes: string[]) {
   return classes.filter(Boolean).join(" ");
 }
+import Link from "next/link";
+
+import Account from "./Account";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -36,32 +39,18 @@ const RootLayout: FC<PropsWithChildren> = ({ children }) => (
               <div className="flex h-16 items-center">
                 {/* Logo */}
                 <div className="ml-4 flex lg:ml-0">
-                  <a href="#">
+                  <Link href="/">
                     <span className="sr-only">Your Company</span>
                     <img
                       src="https://tailwindui.com/img/logos/mark.svg?color=indigo&shade=600"
                       className="h-8 w-auto"
                       alt=""
                     />
-                  </a>
+                  </Link>
                 </div>
 
                 <div className="ml-auto flex items-center">
-                  <div className="hidden lg:flex lg:flex-1 lg:items-center lg:justify-end lg:space-x-6">
-                    <a
-                      className="text-sm font-medium text-gray-700 hover:text-gray-800"
-                      href="#"
-                    >
-                      Sign in
-                    </a>
-                    <span className="h-6 w-px bg-gray-200" aria-hidden="true" />
-                    <a
-                      className="text-sm font-medium text-gray-700 hover:text-gray-800"
-                      href="#"
-                    >
-                      Create account
-                    </a>
-                  </div>
+                  <Account />
 
                   {/* Search */}
                   <div className="flex lg:ml-6">
