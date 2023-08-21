@@ -1,18 +1,11 @@
 import type { Metadata } from "next";
 
-import {
-  MagnifyingGlassIcon,
-  ShoppingBagIcon,
-} from "@heroicons/react/24/outline";
+import { MagnifyingGlassIcon } from "@heroicons/react/24/outline";
+import { CartButton, Account } from "@/app/components";
 import { PropsWithChildren, FC } from "react";
 import { Inter } from "next/font/google";
-
-function classNames(...classes: string[]) {
-  return classes.filter(Boolean).join(" ");
-}
 import Link from "next/link";
 
-import Account from "./Account";
 import "./globals.css";
 
 const inter = Inter({ subsets: ["latin"] });
@@ -66,19 +59,7 @@ const RootLayout: FC<PropsWithChildren> = ({ children }) => (
                     </a>
                   </div>
 
-                  {/* Cart */}
-                  <div className="ml-4 flow-root lg:ml-6">
-                    <a className="group -m-2 flex items-center p-2" href="#">
-                      <ShoppingBagIcon
-                        className="h-6 w-6 flex-shrink-0 text-gray-400 group-hover:text-gray-500"
-                        aria-hidden="true"
-                      />
-                      <span className="ml-2 text-sm font-medium text-gray-700 group-hover:text-gray-800">
-                        0
-                      </span>
-                      <span className="sr-only">items in cart, view bag</span>
-                    </a>
-                  </div>
+                  <CartButton />
                 </div>
               </div>
             </div>
