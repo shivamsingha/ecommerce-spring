@@ -1,0 +1,52 @@
+{
+  "realm": "quickstart",
+  "displayName": "Ecommerce Spring",
+  "enabled": true,
+  "requiredCredentials": ["password"],
+  "loginTheme": "keywind",
+  "users": [
+    {
+      "username": "alice",
+      "enabled": true,
+      "credentials": [
+        {
+          "type": "password",
+          "value": "alice"
+        }
+      ]
+    },
+    {
+      "username": "jdoe",
+      "enabled": true,
+      "credentials": [
+        {
+          "type": "password",
+          "value": "jdoe"
+        }
+      ]
+    },
+    {
+      "username": "service-account-authz-servlet",
+      "enabled": true,
+      "serviceAccountClientId": "authz-servlet",
+      "clientRoles": {
+        "authz-servlet": ["uma_protection"]
+      }
+    }
+  ],
+  "clients": [
+    {
+      "clientId": "authz-servlet",
+      "enabled": true,
+      "rootUrl": "http://localhost:3000",
+      "baseUrl": "http://localhost:3000",
+      "bearerOnly": false,
+      "redirectUris": ["/*", "https://oauth.pstmn.io/v1/callback"],
+
+      "webOrigins": ["+"],
+      "secret": "secret",
+      "authorizationServicesEnabled": true,
+      "directAccessGrantsEnabled": true
+    }
+  ]
+}
