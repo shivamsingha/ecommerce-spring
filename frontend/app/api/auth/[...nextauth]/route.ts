@@ -13,7 +13,6 @@ export const authOptions: AuthOptions = {
           user,
         };
       }
-
       // If the access token has not expired yet, return it
       if (Date.now() < token.expires_at * 1000) {
         return token;
@@ -40,12 +39,10 @@ export const authOptions: AuthOptions = {
         if (!response.ok) throw tokens;
 
         return {
-          ...token, // Keep the previous token properties
-          // many providers may only allow using a refresh token once.
-          refresh_token: tokens.refresh_token ?? token.refresh_token,
-          // Fall back to old refresh token
+          ...token,
+          expires_at: Math.floor(Date.now() / 1000 + tokens.expires_in),
+          refresh_token: tokens.refresh_token,
           access_token: tokens.access_token,
-          expires_at: tokens.expires_at,
           user: user || token.user,
         };
       } catch (error) {
