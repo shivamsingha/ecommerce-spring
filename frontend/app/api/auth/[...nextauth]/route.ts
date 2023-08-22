@@ -1,5 +1,6 @@
 import KeycloakProvider from "next-auth/providers/keycloak";
-import NextAuth, { AuthOptions, TokenSet } from "next-auth";
+import NextAuth, { AuthOptions } from "next-auth";
+import { type TokenSet } from "@auth/core/types";
 
 export const authOptions: AuthOptions = {
   callbacks: {
@@ -7,14 +8,12 @@ export const authOptions: AuthOptions = {
       // If the user is logging in, save the access token and refresh token in the JWT
       if (account) {
         return {
-          refresh_token: account.refresh_token,
-          access_token: account.access_token,
-          expires_at: account.expires_at,
+          ...account,
           user,
         };
       }
       // If the access token has not expired yet, return it
-      if (Date.now() < token.expires_at * 1000) {
+      if (Date.now() < (token.expires_at ?? 0) * 1000) {
         return token;
       }
 
@@ -26,7 +25,7 @@ export const authOptions: AuthOptions = {
             body: new URLSearchParams({
               client_secret: process.env.KEYCLOAK_CLIENT_SECRET || "",
               client_id: process.env.KEYCLOAK_CLIENT_ID || "",
-              refresh_token: token.refresh_token as string,
+              refresh_token: token.refresh_token || "",
               grant_type: "refresh_token",
             }),
             headers: { "Content-Type": "application/x-www-form-urlencoded" },
@@ -40,7 +39,7 @@ export const authOptions: AuthOptions = {
 
         return {
           ...token,
-          expires_at: Math.floor(Date.now() / 1000 + tokens.expires_in),
+          expires_at: Math.floor(Date.now() / 1000 + (tokens.expires_in ?? 0)),
           refresh_token: tokens.refresh_token,
           access_token: tokens.access_token,
           user: user || token.user,
@@ -52,7 +51,9 @@ export const authOptions: AuthOptions = {
     },
     session: ({ session, token }) => ({
       ...session,
-      ...token,
+      access_token: token.access_token,
+      error: token.error,
+      user: token.user,
     }),
   },
   providers: [
